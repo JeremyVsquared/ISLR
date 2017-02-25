@@ -49,4 +49,8 @@ ___
 
 # k-Fold Cross-Validation
 
-This method involves segmenting the data where each of $k$ segments is used as a validation set and the errors for each are averaged. This method permits the use of 100% of the data for training while still performing cross-validation.
+This method involves segmenting the data where each of $k$ segments is used as a validation set and the errors for each are averaged. This method permits the use of 100% of the data for training while still performing cross-validation. Analysis has shown that using $k > 10$ segments is unnecessary.
+
+# Bootstrap Sampling
+
+_Bootstrap sampling_ is a method of artificially increasing a dataset without collecting more observations. Functionally, it is repeatedly and randomly sampling from the dataset without consideration for whether or not a given observation has already been sampled. For example, a given dataset of 1000 observations could be used to generate multiple datasets of 1000 observations, each of which will contain duplicate observations. Bootstrapping is particularly advantageous over k-Fold Cross-Validation when working with smaller datasets.

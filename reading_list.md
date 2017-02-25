@@ -6,3 +6,4 @@
 - [An Empirical Analysis fo Feature Engineering for Predictive Modeling](https://arxiv.org/pdf/1701.07852.pdf)
 - [Deep Learning in Finance](https://arxiv.org/pdf/1602.06561.pdf)
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/index.html)
+- [The Elements of Statistical Learning](http://www-stat.stanford.edu/~tibs/ElemStatLearn/download.html)
