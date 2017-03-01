@@ -1,4 +1,4 @@
-Ensemble learning is a technique of combining multiple learners to create a stronger, more robust learner. This is commonly used as a technique to combat variance or bias present in a single model. 
+Ensemble learning is a technique of combining multiple learners to create a stronger, more robust learner often by combining the output of these learners by voting, weighted voting, averagin, or perhaps even another model. This is commonly used as a technique to combat variance or bias present in a single model. 
 
 Common examples of ensemble learning are _bagging_, _boosting_, and _stacking_.
 
@@ -27,10 +27,6 @@ y_pred = bgc.predict(X_test)
 _Boosting_ is superficially similar to bagging, however individual models are trained on successively modified versions of the dataset and the output is weighted upon aggregation. The weighting is determined by the perfomance of a given model. The principle motivation is to train models for difficult to resolve inputs, focusing each on the cases where prior models failed, such that the resulting learner has a collection of specialty models from which to poll for output.
 
 Popular examples of boosting algorithms are AdaBoost, Gradient Boosting and xgboost.
-
-# Stacking
-
-_Stacking_ is the technique of combining the output of multiple models by means of voting, weighted voting, or averaging these values.
 
 
 # References
