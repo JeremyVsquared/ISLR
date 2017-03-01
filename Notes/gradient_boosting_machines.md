@@ -1,6 +1,6 @@
 # Gradient Boosting Machines
 
-Gradient Boosting Machines, or GBMs, are a boosted algorithm that generates successive decision tree models, each of which is intended to resolve the errors of the previous model. The most important features to be determined when applying this algorithm are the _number of trees_, which will define the number of models to be generated, and the _learning rate_ or _shrinkage_, which dictates the severity of the corrective action as the GBM attempts to resolve it's past errors.
+Gradient Boosting Machines, or GBMs, are a boosting algorithm that generates successive decision tree models, each of which is intended to resolve the errors of the previous model. The most important features to be determined when applying this algorithm are the _number of trees_, which will define the number of models to be generated, and the _learning rate_ or _shrinkage_, which dictates the severity of the corrective action as the GBM attempts to resolve it's past errors.
 
 On the whole, increasing the _number of trees_ will not quickly lead to overfitting and the user may do so until improvement in fit stops.
 

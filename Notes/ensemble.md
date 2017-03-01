@@ -24,7 +24,7 @@ y_pred = bgc.predict(X_test)
 
 # Boosting
 
-_Boosting_ is superficially similar to bagging, however individual models are trained on successively modified versions of the dataset and the output is weighted upon aggregation. The weighting is determined by the perfomance of a given model. The principle motivation is to train models for difficult to resolve inputs, focusing each on the cases where prior models failed, such that the resulting learner has a collection of specialty models from which to poll for output. When working with a clean dataset with little noise, boosting is generally more accurate than bagging.
+_Boosting_ is superficially similar to bagging, however individual models are trained on successively modified versions of the dataset and the output is weighted upon aggregation. The weighting is determined by the perfomance of a given model. The principle motivation is to train models for difficult to resolve inputs, focusing each on the cases where prior models failed, such that the resulting learner has a collection of specialty models from which to poll for output. Boosting is very resistant to overfitting and, when working with a clean dataset with little noise,  is generally more accurate than bagging.
 
 Popular examples of boosting algorithms are AdaBoost, Gradient Boosting and xgboost.
 
