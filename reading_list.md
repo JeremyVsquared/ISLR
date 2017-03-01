@@ -8,6 +8,7 @@
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/index.html)
 - [Accelerating Deep Learning with Shrinkage and Recall](https://arxiv.org/pdf/1605.01369.pdf)
 - [Deep Reinforcement Learning: An Overview](https://arxiv.org/pdf/1701.07274.pdf)
+- [An Experimental Comparison of Three Methods for Constructing Ensembles of Decision Trees: Bagging, Boosting, and Randomization](http://link.springer.com/article/10.1023/A%3A1007607513941)
 
 ## Books
 
