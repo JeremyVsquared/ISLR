@@ -9,9 +9,11 @@
 - [Accelerating Deep Learning with Shrinkage and Recall](https://arxiv.org/pdf/1605.01369.pdf)
 - [Deep Reinforcement Learning: An Overview](https://arxiv.org/pdf/1701.07274.pdf)
 - [An Experimental Comparison of Three Methods for Constructing Ensembles of Decision Trees: Bagging, Boosting, and Randomization](http://link.springer.com/article/10.1023/A%3A1007607513941)
+- [Deep Forest: Towards An Alternative to Deep Neural Networks](https://arxiv.org/pdf/1702.08835.pdf)
 
 ## Books
 
 - [The Elements of Statistical Learning](http://www-stat.stanford.edu/~tibs/ElemStatLearn/download.html)
+- [Machine Learning An Algorithmic Perspective](https://www.amazon.com/Machine-Learning-Algorithmic-Perspective-Recognition/dp/1420067184)
 - [Pattern Recognition and Machine Learning](https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738/)
 - [Machine Learning A Probabilistic Perspective](https://www.amazon.com/Machine-Learning-Probabilistic-Perspective-Computation/dp/0262018020)
