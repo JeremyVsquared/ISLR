@@ -43,6 +43,10 @@ $$RSS = \sum_i (y_i - f(x_i))^2$$
 
 $$MSE = \frac{1}{n} \sum_i (\hat{y}_i - y_i)^2$$
 
+# Cross-Entropy
+
+$$D = - \sum^K_{k=1} \hat{p}_{mk} log\hat{p}_{mk}$$
+
 ___
 
 # Methods for evaluating model performance

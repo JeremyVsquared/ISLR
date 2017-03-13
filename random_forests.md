@@ -1,6 +1,6 @@
 # Random Forests
 
-_Random forests_ is an ensemble algorithm that functions by training multiple decision trees and combining the results, by voting in the case of classification or by the mean of the outputs in the case of regression. Random forests uses bagging to generate many datasets, but takes the efforts to avoid overfitting one step further by selecting a random subset of features at each split. The introduction of randomization in the data by the bagging process and in the features in the splitting process result in a very robust learner.
+_Random forests_ is an ensemble algorithm that functions by training multiple decision trees and combining the results, by voting in the case of classification or by the mean of the outputs in the case of regression. Random forests uses bagging to generate many datasets, but takes the efforts to avoid overfitting one step further by selecting a random subset of features at each split. The introduction of randomization in the data by the bagging process and in the features in the splitting process result in a very robust learner by decorrelating the trees.
 
 Random forests can be applied to classification (Random Forest Classifier) and regression (Random Forest Regressor).
 

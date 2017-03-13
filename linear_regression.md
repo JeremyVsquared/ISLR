@@ -24,7 +24,7 @@ y.pred = predict(mdl, df.test)
 
 ## Ordinary Least Squares
 
-The most common linear regression algorithm is _Ordinary Least Squares_ (OLS) which uses the squared error $(\hat{y} - y)^2$, difference between the predicted output and the true value, as it's measurement of fit. An optimized OLS fit will minimize the squared error by iteratively adjusting the $\hat{\beta}$ coefficients.
+The most common linear regression algorithm is _Ordinary Least Squares_ (OLS) which uses the squared error, or _residual sum of squares (RSS) $\sum_i (y_i - f(x_i))^2$, the difference between the predicted output and the true value, as it's measurement of fit. An optimized OLS fit will minimize the squared error by iteratively adjusting the $\hat{\beta}$ coefficients.
 
 
 ## Feature selection
