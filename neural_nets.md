@@ -14,7 +14,9 @@ Neural networks perform particularly well at modeling rational differences and r
 
 # Convolutional Neural Networks
 
-_Convolutional Neural Networks_ are deep neural networks with hidden, convolutional layers that specifically target characteristics of the features. As an example, a convolutional layer being used for computer vision may be looking for straight lines, angles, arcs, or light or dark areas. These layers then pass their output to the next layer as an input such that, for instance, identifying a series of co-located arcs would be identified in the next layer as a circle or angles as a square. The convolutional layers may continue to build these basic characteristics into basic shapes into combinations of shapes into more complicated combinations, and these are eventually used to identify likelihood of the various classes such as a bird or a person or a car. These likelihoods are then passed to a fully connected layer which chooses the class with the highest percentage.
+_Convolutional Neural Networks_ are deep neural networks with hidden, convolutional layers that specifically target characteristics of the features. The way it does so is by effectively examining an observation piece by piece by way of a sliding window which only reveals small portions of the whole, then reducing the data observed to a lower dimensional representation.
+
+As an example, a convolutional layer being used for a computer vision problem may be looking for straight lines, angles, arcs, or light or dark areas. These layers then pass their output to the next layer as an input such that, for instance, identifying a series of co-located arcs would be identified in the next layer as a circle or angles as a square. The convolutional layers may continue to build these basic characteristics into basic shapes into combinations of shapes into more complicated combinations, and these are eventually used to identify likelihood of the various classes such as a bird or a person or a car. These likelihoods are then passed to a fully connected layer which chooses the class with the highest percentage.
 
 ## References
 
