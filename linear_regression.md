@@ -1,6 +1,6 @@
 # Regression
 
-_Regression_ algorithms predict continuous values as opposed to _classification_ algorithms which predict discrete values. Predicting weather offers an example of this. Regression would be used to predict inches of rain, classification would be used to predict whether or not it will rain. Geometrically, the difference could be thought of in terms of optimized Euclidean distance. A well-fitted regression will minimize the average Euclidean distance between a predicted line and the observations while a similarly well-fitted classification will maximize this distance.
+_Regression_ algorithms predict continuous values as opposed to _classification_ algorithms which predict discrete values. Predicting weather offers an example of this. Regression would be used to predict inches of rain, classification would be used to predict whether or not it will rain. Geometrically, the difference in linear methods could be thought of in terms of optimized Euclidean distance. A well-fitted regression will minimize the average Euclidean distance between a predicted line and the observations while a similarly well-fitted classification will maximize this distance.
 
 # Linear Regression
 

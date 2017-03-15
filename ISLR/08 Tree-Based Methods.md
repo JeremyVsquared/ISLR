@@ -2,7 +2,7 @@
 
 Tree-based methods involve _stratifying_ or _segmenting_ the predictor into a number of simple regions. In order to make a prediction, we typically use the mean or the mode of the training observations in the region to which it belongs. _Decision tree_ methods are simple and useful for interpretation, but are typically not competitive with the best supervised learning methods in terms of prediction accuracy.
 
-_Bagging, random forests_ and _boosting_ involve producing multiple trees which are then combined to yield a single consensus prediction. Combining a large number of trees can often result in dramatic improvements in prediction accuracy at the expense of interpretability.
+_Bagging_, _random forests_ and _boosting_ involve producing multiple trees which are then combined to yield a single consensus prediction. Combining a large number of trees can often result in dramatic improvements in prediction accuracy at the expense of interpretability.
 
 ___
 

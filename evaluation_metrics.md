@@ -41,7 +41,7 @@ $$RSS = \sum_i (y_i - f(x_i))^2$$
 
 # Mean Squared Errors
 
-$$MSE = \frac{1}{n} \sum_i (\hat{y}_i - y_i)^2$$
+$$MSE = \frac{1}{n} \sum_i^n (\hat{y}_i - y_i)^2$$
 
 # Cross-Entropy
 
