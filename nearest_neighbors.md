@@ -1,8 +1,12 @@
 # Nearest Neighbors
 
-_K-nearest neighbors_ (KNN) is a non-parametric learning algorithm with a fairly simple premise of averaging the target of the observations that are nearest the predictor. The value of $K$ determines the number of neighbors used to generate the prediction. $K$ dictates the bias-variance tradeoff: large $K$ will generate a smoother fit with low variance and high bias, small $K$ will generate a low bias but high variance fit. Additionally, large $K$ can result in difficulties in fit due to dimensionality as it becomes increasingly difficult to locate a suitably "close" neighbor. One of the major benefits of KNN is that it relies upon no assumptions about the underlying data as a linear method does.
+_K-nearest neighbors_ (KNN) is a learning algorithm with a fairly simple premise of averaging the target of the observations that are nearest the predictor. The value of $K$ determines the number of neighbors used to generate the prediction. $K$ dictates the bias-variance tradeoff: large $K$ will generate a smoother fit with low variance and high bias, small $K$ will generate a low bias but high variance fit. Additionally, large $K$ can result in difficulties in fit due to dimensionality as it becomes increasingly difficult to locate suitably close neighbors. This closeness is most often evaluated by Euclidean distance. In this case, feature extraction and/or dimensionality reduction can be helpful to resolve the issue. The choice of $K$ should be made based upon cross-validation.
+
+One of the major benefits of KNN is that it is non-parametric and relies upon no assumptions about the distribution of the underlying data as a linear method does. Additionally, KNN does not _train_ the way a parametric method would, rather computation does not take place until prediction.
 
 KNN can be applied to classification by applying the most common label of the nearest neighbors or regression by averaging the target of the nearest neighbors.
+
+A potential problem with KNN's are class outliers, or observations that fall outside of normal ranges and are surrounded by observations with another label. This can be caused by errors in the data or a _class imbalance_. Class imbalance is the presence of an overwhelming majority of a particular class, such as 90% class A and 10% class B. These circumstances can be difficult to overcome as they often lead to incorrect assumptions about the data or invalid predictions.
 
 ```{python}
 from sklearn.neighbors import KNeighborsClassifier
