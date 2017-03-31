@@ -1,0 +1,40 @@
+# Class Imbalance
+
+Class imbalance is a problem of training on data with an extreme difference in observations of different classes. This is an issue when addressing certain problems such as identifying cases of fraudulent credit card charges. When examining transaction records from a processor, it is likely that a disproportionate majority of the transactions will not be fraudulent. If 90% of the transactions are legitimate and only 10% are fraudulent, most learning algorithms will tend to ignore the important qualities of the fraudulent observations leading to misclassifications. Since most learning algorithms are designed to detect patterns, cases of extreme class imbalance can easily lead the learning algorithm to believe the minority class features are noise or errors in the data and thus ignored. Another potential issue is a lack of sufficient training data. While the dataset as a whole may contain sufficient observations for training purposes, there may not be enough observations of the minority class in order to effectively train upon. These problems are can be resolved by data preprocessing, an algorithmic approach, or a hybrid methodology combining the two.
+
+## Data preprocessing approach
+
+Data preprocessing approaches generally attempt to address the issue by balancing the data such that the classes are more evenly represented. One way to achieve this is through sampling. Over sampling the minority class can be done by resampling with replacement. This is done by randomly selecting minority class observations and duplicating them until the classes have achieved an even distribution. A more even distribution can also be achieved by under sampling the majority class by randomly removing observations from the majority class. While both of these methods can be effective, the _selective preprocessing of imbalanced data_ (SPIDER) method combines the two through simultaneous local over sampling of the minority class observations and removing outlier instances of the majority class.
+
+In addition to the above, there are some more creative ways to balance the class distribution through the generation of minority class instances through the interpolation of the minority class observations. This is known as the _synthetic minority oversampling technique_ (SMOTE). This effectively generates new observations based upon the identification of clustered minority class observations. The _modified synthetic minority oversampling technique_ (MSMOTE) is similar to SMOTE but divides the minority class observations into _safe_, _border_, and _latent noise_ groups in order to attempt to maintain the general distributions of the minority class observations from the originally observed data. Both the SMOTE and MSMOTE have proven very effective after the evaluation of models trained on oversampled data using these methods. 
+
+## Algorithmic approach
+
+Algorithmic approaches to addressing the class imbalance problem function by attempting to alter or adapt existing classifiers to bias learning toward minority classes. Algorithms that tend to perform well in these cases are decision trees and extensions of decision trees such as C4.5, CART, and Random Forests. An alternative method is to adapt any classification learning algorithm to instill a weighted, or greater, penalty for misclassifying observations from the minority class. In this way, the algorithm is adjusted such that all classes will not be treated as equal and directs greater learning attention to the minority class.
+
+Ensemble learning methods have become quite common to addressing difficult learning problems, and class imbalance is no exception to this. Two specific methods are bagging and boosting.
+
+### Bagging
+
+Bagging can be used to address class imbalance by segmenting the dataset differently either in an ordinary bagging method or by implementing a hybrid ensemble method. In an ordinary bagging method, a variation of the original method called _pasting small votes_ can be applied. This method was originally developed for use with extremely large datasets and involves partitioning the data into subsets which are used to train different classifiers. This can be done either by _Rvotes_, which subsets the data at random, or by _Ivotes_ which subsets the data consecutively.
+
+Bagging-based ensembles use a hybrid approach of bagging and data preprocessing. This is typically simpler than integrating data preprocessing techniques in boosting. One method is known as _OverBagging_ which combines the oversampling preprocessing technique to balance the class distribution and bagging. A predictable alternative method is _UnderBagging_, which does the same except that it uses the undersampling preprocessing technique. _UnderOverBagging_ is another approach which combines the two, utilizing simultaneous oversampling of the minority class and undersampling of the majority class. This concept can be combined by using the SPIDER preprocessing with Ivotes in a method known as _IIVotes_.
+
+### Boosting
+
+Boosting can be adapted to better target class imbalance datasets through _cost-sensitive boosting_. One such method is _AdaCost_, an adaptation of AdaBoost which adds a cost adjustment function $\phi$ which weights adjustments more for  misclassified instances. Another is _RareBoost_ which updates based upon metrics relevant to class imbalanced datsets. In RareBoost, two different $\alpha_t$ values are calculated, one being for positive classifications scaled in proportion to how well false positives are distinguished from true positives and another for false negatives similarly scaled in proportion to how well they are distinguished from true negatives.
+
+As with bagging, there are a variety of _boosting-based ensembles_ which integrate data preprocessing techniques into boosting implementations. These ensembles effectively bias weight distributions toward minority classes for the next training iteration. _SMOTEBoost_ and _MSMOTEBoost_ are two such ensembles which integrate the SMOTE and MSMOTE data preprocessing techniques into the AdaBoost algorithm, thus injecting synthesized observations for the minority class into the training dataset. Oversampling and undersampling preprocesing methods can be combined in _RUSBoost_ which does this randomly within each training iteration. _DataBoost-IM_ is another ensemble method which implements a data generation strategy by identifying hard to classify observations as examples to duplicate for both classes to carry out a rebalancing process.
+
+### Bagging and Boosting
+
+It can be advantageous to combine bagging and boosting in a single ensemble method which trains for each new bag using the AdaBoost algorithm. _EasyEnsemble_ is one such method which uses fewer bags for training than UnderBagging but assigns more classifiers per bag. Another is _BalanceCascade_ which functions in a supervised manner where classifiers must be trained sequentially. After each classifier is trained, the majority class observations correctly classified with the highest degrees of confidence are removed from the training set before the next iteration.
+
+## Hyrbid approach
+
+Hybrid approaches combine data preprocessing and algorithmic approaches in an effort to address the class imbalance problem. This can be especially effective as extremes in either approach can be faulty but combing the two can lessen negative impacts while still addressing the issue.
+
+## Performance evaluation
+
+Evaluation of trained models in the context of class imbalance must be considered differently from not given how extreme the imbalance is within the dataset. Consider the scenario of a 2 class dataset with an imbalance of 95% to 5% of the majority class to the minority class. Given a classifier that always predicted the majority class would have a 95% accuracy, these obviously need to be evaluated differently. Typically this is done by looking at _true positive_, _true negative_, _false positive_, and _false negative_ rates, and more often combining these with AUC/ROC.
+
