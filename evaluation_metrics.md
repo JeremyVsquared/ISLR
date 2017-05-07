@@ -19,6 +19,34 @@ _Recall_ is the ratio of predicted true positives to all positives. Can be thoug
 
 $$recall = \frac{true\ positives}{true\ positives + false\ negatives}$$
 
+# Mean Absolute Error (MAE)
+
+$$\frac{1}{v} \sum^v_{t=1} |e_t|$$
+
+magnitude of average absolute error
+
+# Mean Absolute Percentage Error (MAPE)
+
+$$\frac{1}{v} \sum&v_{t=1} |\frac{e_t}{y_t} x 100$$
+
+gives percentage score of how the predicted values deviate from actual values
+
+# Residual Sum of Squares
+
+$$RSS = \sum_i (y_i - f(x_i))^2$$
+
+# Mean Squared Errors
+
+$$MSE = \frac{1}{n} \sum_i^n (\hat{y}_i - y_i)^2$$
+
+# Root Mean Squared Error (RMSE)
+
+$$\sqrt{\frac{1}{v} \sum^N_{n=1} e^2_n}$$
+
+# Cross-Entropy
+
+$$D = - \sum^K_{k=1} \hat{p}_{mk} log\hat{p}_{mk}$$
+
 # F-measure
 
 The _F-measure_ is a combination of precision and recall. The common version of F-measure evaluates precision and recall as equal values, not prioritizing either over the other.
@@ -34,18 +62,6 @@ The _ROC curve (Receiver Operating Characteristic)_ evaluates the tradeoff betwe
 $r^2$, also referred to as the _coefficient of determination_, is an evaluation of how closely observations fit a regression.
 
 $$R^2 = 1 - \frac{\sum_i(y_i - \hat{y}_i)^2}{\sum_i(y_i - \bar{y})^2} = \frac{\sum_i(\hat{y}_i - \bar{y})^2}{\sum_i(y_i - \bar{y})^2}$$
-
-# Residual Sum of Squares
-
-$$RSS = \sum_i (y_i - f(x_i))^2$$
-
-# Mean Squared Errors
-
-$$MSE = \frac{1}{n} \sum_i^n (\hat{y}_i - y_i)^2$$
-
-# Cross-Entropy
-
-$$D = - \sum^K_{k=1} \hat{p}_{mk} log\hat{p}_{mk}$$
 
 ___
 

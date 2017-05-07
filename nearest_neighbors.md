@@ -20,3 +20,11 @@ y_pred = knn.predict(X_test)
 ```{r}
 y.pred = knn(X.train, X.test, y.train, k=10)
 ```
+
+## Extending Nearest Neighbors
+
+One of the greatest weaknesses of KNN is it's performance suffers with sparse or tightly clustered, overlapping class data. There are numerous, less studied algorithms that can be proven to perform better than traditional KNN which aim to make KNN more flexible in these troublesome circumstances by adapting $k$ to observational circumstances. These algorithms typically apply a sliding scale of $k$ rather than a constant value to better classify a given observation by discriminant metrics such as comparison of the Euclidean distance to neighbors. While less tested and less well known, research in this area has concluded that many of these methods perform better than traditional KNN.
+
+- http://www.cs.toronto.edu/~cuty/LEKM.pdf
+- http://sci2s.ugr.es/keel/pdf/algorithm/articulo/knnAdaptive.pdf
+- http://delab.csd.auth.gr/papers/ADBIS07onpmw.pdf
