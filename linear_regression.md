@@ -61,18 +61,6 @@ y_pred = mdl.predict(X_test)
 
 A high dimensional (ie, has many features) dataset can prove problematic to fit for a variety of reasons from computational limitations to weak fits. One way to resolve these issues is feature selection, but this is not always ideal. Another way to reduce the number of features is to generate linear combinations of the original features and regress on those.
 
-### Principal Component Regression
-
-As the name implies, _principal component regression_ (PCR) regresses on the principal components of the dataset. PCR reduces the dimensionality of the data with the additional benefit of resolving multicollinearity. Additionally, since the greatest proportion of variation and explanation of the features is concentrated within the principal components, PCR will theoretically provide a better fit than an _ordinary least squares_ regression trained on the original data. The number of derived features $M$ should be chosen by cross-validation.
-
-```{r}
-library(pls)
-
-pcr.mdl = pcr(y~., data=df.train, scale=TRUE, validation="CV)
-summary(pcr.mdl)
-
-y.pred = predict(pcr.mdl, df.test)
-```
 
 ### Partial Least Squares
 
