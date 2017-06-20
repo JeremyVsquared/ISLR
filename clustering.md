@@ -1,16 +1,8 @@
 _Clustering_ or _cluster analysis_ is a form of unsupervised learning that attempts to find subsets or groups within data. In order to accomplish this, the algorithm must be given a definition of similarity or dissimilarity which is supplied by the user. There are a variety of methods to refine this input, but ultimately it must come from outside the data.
 
-There are three general types of clustering algorithms: _combinatorial algorithms_, _mixture modeling_, and _mode seeking_.
-
-_Combinatorial algorithms_ work with the data as it is presented without any assumption of an underlying probability model.
-
-_Mixture modeling_ presumes the data is derived from a combination of component density functions, each component density being a cluster which are fit by way of maximum likelihood or Bayesian methods.
-
-Like mixture modeling, _mode seekers_ presumes an unknown probability density function but differs by attempting to assign clusters by some measure of distance from the centroid.
-
 # K-means
 
-_K-means_ is a combinatorial algorithm, and probably the most popular clustering algorithm. It uses Euclidean distance as its dissimilarity metric and produces $K$ distinct clusters by minimizing the within cluster variation. The user must specify $K$.
+_K-means_ is probably the most popular clustering algorithm. It uses Euclidean distance as its dissimilarity metric and produces $K$ distinct clusters by minimizing the within cluster variation. The user must specify $K$.
 
 ```{python}
 from sklearn.cluster import KMeans
@@ -46,6 +38,9 @@ The _elbow method_ is a graphical evaluation of the _percentage of variance expl
     - those $log W^*_k$ from the $B$ Monte Carlo replicates exhibit a standard deviation $sd(k)$ which, accounting for the simulation error, is turned into the quantity $s_k = \sqrt{1 + 1/B} sd(k)$
     - the optimal number of clusters $K$ is the smallest $k$ such that $Gap(k) \geq Gap(k + 1) - s_{k + 1}$
 
+# Hierarchical Clustering
+
+- 
 
 
 - [On Clustering Validation Techniques](http://web.itu.edu.tr/sgunduz/courses/verimaden/paper/validity_survey.pdf)
