@@ -12,7 +12,7 @@ In order to address the problem of the _vanishing gradient_, an adaptation of th
 
 Here we will use an LSTM to classify handwritten numbers as images to their respective digits, classified as 0 through 9. Here we are limiting the epochs to 1 as the __n_epoch__ parameter to __model.fit()__ in order to quickly see results. Increase the number epochs in order to improve accuracy.
 
-'''{python}
+```python
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -35,13 +35,13 @@ net = tflearn.regression(net, optimizer='adam',
 model = tflearn.DNN(net, tensorboard_verbose=2)
 # train the network
 model.fit(X_train, y_train, n_epoch=1, validation_set=0.1, show_metric=True, snapshot_step=100)
-'''
+```
 
 ## Text Classification Application
 
 Here we will use an LSTM to perform sentiment analysis on movie reviews from IMDB as positive or negative based upon the text content of the review. Here we are limiting the epochs to 1 as the __n_epoch__ parameter to __model.fit()__ in order to quickly see results. Increase the number epochs in order to improve accuracy.
 
-'''{python}
+```python
 from __future__ import division, print_function, absolute_import
 
 import tflearn
@@ -70,7 +70,7 @@ net = tflearn.regression(net, optimizer='adam', learning_rate=0.001,loss='catego
 model = tflearn.DNN(net, tensorboard_verbose=0)
 # train the network
 model.fit(X_train, y_train, n_epoch=1, validation_set=(X_test, y_test), show_metric=True, batch_size=32)
-'''
+```
 
 # References
 - [A Noobs Guide to Implementing RNN-LSTM Using Tensorflow](http://monik.in/a-noobs-guide-to-implementing-rnn-lstm-using-tensorflow/)

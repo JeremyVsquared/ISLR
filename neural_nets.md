@@ -1,6 +1,44 @@
 # Neural Networks
 
-Neural networks have been proven to be a universal approximator. That is, for any given input $x$ and any given output $y$, a neural network can be trained to approximate this function. This is known as a _universality theorem_. 
+Neural networks are groups of interconnected processing nodes which perform basic calculations which when working together create powerful estimator. These filters, called __neurons__, are arranged in one or more __hidden layers__ between the input and the output, the specifications of which is referred to as an architecture. In general, the more complicated this architecture, the more complicated the relationship the network is capable of modeling.
+
+```python
+from sklearn.neural_network import MLPClassifier
+
+# generate some simple training data
+X_train = [[0., 0.], [1., 1.]]
+y_train = [0, 1]
+X_test = [[0.1, 0.2]]
+y_test = [0]
+
+# define & train the network
+nn = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5,), random_state=1)
+nn.fit(X_train, y_train)
+
+nn.predict(X_test)
+```
+
+The above code defines a very simple network with 5 neurons in only one layer, set by the __hidden_layer_sizes__ parameter to __MPLClassifier()__. This simple network could be visualized as 2 nodes for the input, both of which are connected to all 5 nodes of the single hidden layer, all of which will be connected to the single output node.
+
+![Simple neural network](images/nn_01_simple_network.png)
+
+Computationally, what happens here is all inputs are passed to all neurons of the hidden layer. When passed, the input values are multiplied by a coefficient unique to each path which is automatically tuned during training and the product of these values is what the neuron receives. Each neuron then evaluates the value it receives by some activation function which determines it's output. This activation function could result in such simple output as 0 or 1 or a scaled function , such as a sigmoid function, which will output some value between 0 or 1. Think of this as the difference between a light switch and a light dimmer. All of this is intended to matchematically model the way our brains function by neurons firing or not firing. The neural network was historically defined with neurons which output only 0 or 1, much like our own neurons. However, as they have been used and further developed in modern machine learning applications it has become clear that they are far more effective when they permit a scale of values between 0 and 1.
+
+## Deep Neural Networks
+
+The preceding network is rather simple. When dealing with a more complicated relationship than our example data above, we can increase number of neurons in the hidden layer from 5 to 10, or even 100. And if this is insufficient to improve the accuracy of the model, we can add more hidden layers. For instance, let's assume that we wanted increase the number of neurons from 5 to 8 and add another hidden layer. This could be done by altering our __MLPClassifier()__ definition to the follwoing:
+
+```python
+nn = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(8,8), random_state=1)
+```
+
+And now our network looks like this:
+
+![Simple deep neural network](images/nn_02_deep_network.png)
+
+In a single hidden layer scenario, all inputs are connected to all neurons in the hidden layer, and all of the hidden layer neurons are connected to the output. Similarly, in the case of multiple hidden layers, all neurons of each layer are connected to all neurons in the subsequent hidden layer. And just as was the case between the inputs and the first hidden layer, each connection between the first and second hidden layers will have their own unique coefficient which is multiplied by the output of the neurons in the first hidden layer, and the neurons in the second layer will perform their activation function upon these products before sending their output to the output neuron. Neural networks with more than one hidden layer are referred to as __deep neural networks__.
+
+## Bias Units
 
 ## Architectural Design
 
@@ -10,7 +48,7 @@ As for the hidden layers, if the data is linearly separable then no hidden layer
 
 ## Strengths & Weaknesses
 
-Neural networks perform particularly well at modeling rational differences and ratios, and quite poorly with rational polynomials.
+Neural networks have been proven to be a universal approximator. That is, for any given input $x$ and any given output $y$, a neural network can be trained to approximate this function. This is known as a _universality theorem_. Neural networks perform particularly well at modeling rational differences and ratios, and quite poorly with rational polynomials.
 
 # Convolutional Neural Networks
 
