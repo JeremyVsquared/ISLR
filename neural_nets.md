@@ -56,11 +56,11 @@ In review, every neural network has one _input layer_, one _output layer_, and o
 
 As for the hidden layers, if the data is linearly separable then no hidden layers are necessary. Otherwise a single hidden layer is quite sufficient for the vast majority of situations. One should evaluate a variety of architectures in order to find an optimal solution.
 
-## Deeper Explanations
+## Training
 
-### Training
+Neural networks operate by perform simple calculations in each layer, passing these outputs as inputs into future layers in order to make predictions. Networks that operate in this way are called __feedforward__ networks. Before making these predictions, the network must first be trained. Training the neural network requires an algorithm that can interpret the prediction error by what's called the __cost function__ and make subtle changes the weights of the neurons. A small change in weights of any single neuron can spiral out to large portions of the network, sometimes casuing significant and unwanted changes to the output. In order to accomplish this, an algorithm can be used that can estimate how these changes impact the cost function and pass this estimation to the preceding neurons through the network in order to adjust the weights and hopefully improving the accuracy of the output. Improved accuracy is defined by $y^hat$ better approximating $y_i$, which is evaluated by the cost function, also referred to as the __loss__ or __objective__ function. This algorithm is called __backpropogation__. Backpropogation calculates the gradient of the cost function which is used to estimate better weights. Neurons were traditionally defined to output binary values, 0 or 1, which is referred to as a __perceptron__. This makes the network fairly brittle and requires larger, more complicated networks to better model relationships. Changing these neurons to be more flexible to make the network a better model, so __sigmoid__ neurons are more commonly used which output a ranged value between 0 and 1.
 
-
+In order to estimate a set of weights which minimize the cust, gradient descent can be used but is not a very performant option. When facing larger networks, it can prove to be quite slow and cumbersome. This process can be sped up substantially by using __stochastic gradient descent__ which operates upon randomly sampled batches of data and extrapolating the results upon the larger data set.
 
 ### Strengths & Weaknesses
 
