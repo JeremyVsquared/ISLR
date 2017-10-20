@@ -4,7 +4,7 @@ Tree based methods involve segmenting the data such that it is divided into nume
 
 Decision trees can be applied to classification problems by applying the most common label at the predicted leaf or regression problems by averaging the target at the predicted leaf.
 
-```{python}
+```python
 from sklearn.tree import DecisionTreeClassifier()
 
 tree_mdl = DecisionTreeClassifier()
@@ -13,7 +13,7 @@ tree_mdl.fit(X_train, y_train)
 y_pred = tree_mdl.predict(X_test)
 ```
 
-```{r}
+```r
 library(tree)
 
 tree.mdl = tree(y~., data=df.train)

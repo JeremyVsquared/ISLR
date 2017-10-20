@@ -8,7 +8,7 @@ The _learning rate_ should be small (between $0$ and $1$). Having an extremely s
 
 GBMs can be applied to regression (_Gradient Boosting Regressor_) or classification (_Gradient Boosting Classifier_).
 
-```{python}
+```python
 from sklearn.ensemble import GradientBoostingRegressor
 
 gbr = GradientBoostingRegressor(n_estimators=250, learning_rate=0.003, loss='ls')
@@ -17,7 +17,7 @@ gbr.fit(X_train, y_train)
 y_pred = gbr.predict(X_test)
 ```
 
-```{r}
+```r
 library(gbm)
 
 gbm = gbm(y ~., df, n.trees=250, shrinkage=0.003, distribution="gaussian", interaction.depth=7, bag.fraction=0.9, cv.fold=10, n.minobsinnode = 50)

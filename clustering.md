@@ -1,10 +1,12 @@
+# Clustering
+
 _Clustering_ or _cluster analysis_ is a form of unsupervised learning that attempts to find subsets or groups within data. In order to accomplish this, the algorithm must be given a definition of similarity or dissimilarity which is supplied by the user. There are a variety of methods to refine this input, but ultimately it must come from outside the data.
 
 # K-means
 
 _K-means_ is probably the most popular clustering algorithm. It uses Euclidean distance as its dissimilarity metric and produces $K$ distinct clusters by minimizing the within cluster variation. The user must specify $K$.
 
-```{python}
+```python
 from sklearn.cluster import KMeans
 
 km = KMeans(n_clusters=8)
@@ -14,7 +16,7 @@ print(km.cluster_centers_)
 km.predict(X_test)
 ```
 
-```{r}
+```r
 km.cluster = kmeans(df, 8, nstart=20)
 km.cluster$cluster
 ```

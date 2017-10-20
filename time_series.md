@@ -52,7 +52,7 @@ The trailing moving average begins with the given observation and then looks bac
 
 $$TMA_t = (y_t + y_{t - 1} + ... + y_{t - w + 1}) / w$$
 
-```{r}
+```r
 library(zoo)
 # centered moving average
 ma.centered = ma(ridership.ts, order=12)

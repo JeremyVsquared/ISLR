@@ -1,3 +1,5 @@
+# Ensembles
+
 Ensemble learning is a collection of techniques which combine multiple learners to create a stronger, more robust learner often by combining the output of these learners by voting, weighted voting, averagin, or perhaps even another model. This is commonly used as a technique to combat variance or bias present in a single model. This tends to be a very effective tool as it functions as a "committee" of learners, rather than relying entirely upon a single hypothesis to wholly and accurately model the reality of some data.
 
 Common examples of ensemble learning are _bagging_, _boosting_, and _stacking_.
@@ -6,7 +8,7 @@ Common examples of ensemble learning are _bagging_, _boosting_, and _stacking_.
 
 _Bagging_ is an abbreviation for _Bootstrap Aggregation_. This is an ensemble practice of bootstrapping a dataset such that a model can be independently trained on each of the resampled datasets. When predicting, each of these model instances perform their prediction and the output is aggregated in some way, such as averaging in the case of a regression or voting in the case of classification. This method is especially useful when working with unstable models that tend toward high variance or data with a lot of noise.
 
-```{python}
+```python
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import BaggingClassifier

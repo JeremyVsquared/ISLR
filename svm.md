@@ -9,7 +9,7 @@ Support vector machines can be applied to regression (_Support Vector Regressor_
 
 The implementation of SVM involves two variable parameters used to optimize the algorithm. The first is $C$, which is a nonnegative tuning parameter that determines the degree to which the margin can be violated by the training observations. This effectively serves as a definition of permitted error. Secondly, there is the $\epsilon$ term which basically defines a margin of error which will be ignored by the algorithm in refining the position of the hyperplane.
 
-```{python}
+```python
 from sklearn.svm import SVR
 
 svr = SVR(C=1.2, epsilon=0.2)
@@ -18,7 +18,7 @@ svr.fit(X_train, y_train)
 y_pred = svr.predict(X_test)
 ```
 
-```{r}
+```r
 svm.model = svm(y ~., data=df_train)
 y.pred = predict(svm.model, df_test)
 ```

@@ -1,3 +1,5 @@
+# Assocation Rules
+
 There are many circumstances in which it can be very useful to examine the relationships between particular items within a dataset. This frequently arises when recommendation engines are needed to identify products often purchsed in coincidence with one being viewed by a user, or which video is related to the currently viewed video in the context of a streaming service. The most basic method of developing such a system is to discover _association rules_ between all the available choices. 
 
 These association rules typically take the form of {flashlight} -> {batteries}, which is to say that when a customer purchases a flashlight they are highly likely based upon transaction history to simultaneously purchase batteries. Such association rules involving itemset subsets will be derived from the larger database of transactions. Association rules are an unsupervised method and as such do not require training.

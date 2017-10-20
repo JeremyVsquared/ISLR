@@ -8,7 +8,7 @@ KNN can be applied to classification by applying the most common label of the ne
 
 A potential problem with KNN's are class outliers, or observations that fall outside of normal ranges and are surrounded by observations with another label. This can be caused by errors in the data or a _class imbalance_. Class imbalance is the presence of an overwhelming majority of a particular class, such as 90% class A and 10% class B. These circumstances can be difficult to overcome as they often lead to incorrect assumptions about the data or invalid predictions.
 
-```{python}
+```python
 from sklearn.neighbors import KNeighborsClassifier
 
 knn = KNeighborsClassifier(n_neighbors=10)
@@ -17,7 +17,7 @@ knn.fit(X_train, y_train)
 y_pred = knn.predict(X_test)
 ```
 
-```{r}
+```r
 y.pred = knn(X.train, X.test, y.train, k=10)
 ```
 

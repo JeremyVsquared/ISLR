@@ -7,7 +7,7 @@ _Regression_ algorithms predict continuous values as opposed to _classification_
 _Linear regression_ functions by iteratively correcting functional parameters in order to minimize the average difference between predicted values and the target values. Geometrically, it generates a predicted line and then moves it until it has minimized the average distance between the observations and the line. 
 
 Python
-```{python}
+```python
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -31,7 +31,7 @@ plt.show()
 ![linear_regression_1](images/linear_regression_1_p.png)
 
 R
-```{r}
+```r
 # read data from csv into a new dataframe
 df = read.csv("concrete.csv")
 
@@ -52,7 +52,7 @@ lines(df$cement, y.pred, col=c("black"))
 This code sample is an example of _univariate linear regression_ which uses a single variable feature to predict the outcome. In this example case, it is using the measurement of cement to predict the strength of concrete. While certainly useful, it is somewhat limited as it does not allow for multiple influencing factors. For instance, the amount of cement alone cannot singularly predict the strength of concrete as other factors such as overall composition and age will certainly play a role. These other factors can be included quite easily in these implementations by adding them to the feature space in a method known as _multivariate linear regression_.
 
 Python
-```{python}
+```python
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -69,7 +69,7 @@ y_pred = mdl.predict(df.values.cement)
 ```
 
 R
-```{r}
+```r
 # read data from csv into a new dataframe
 df = read.csv("concrete.csv")
 
@@ -98,7 +98,7 @@ While feature selection can be effectively implemented to produce better fits, r
 
 Both ridge regression and the lasso reduce the impact of features by adding a penalty term to coefficients. The ridge regression uses an $L2$ penalty ($\sum^p_1 \beta^2_j$) and the lasso uses an $L1$ penalty ($\sum^p_1 \beta_j$), both with a coefficient of $\lambda$ which is used to moderate the penalty. The $\lambda$ values are $\ge 0$ and are correlated with the degree of shrinkage that occurs; in other words, the larger the value of $\lambda$, the more the feature coefficient will be diminished. In practice, the $\lambda$ value is chosen by cross validation. $\lambda = 0$ will result in ordinary least squares for both ridge and the lasso.
 
-```{python}
+```python
 from sklearn.linear_model import Ridge
 
 mdl = Ridge(alpha=0.2)
@@ -107,7 +107,7 @@ mdl.fit(X_train, y_train)
 y_pred = mdl.predict(X_test)
 ```
 
-```{python}
+```python
 from sklearn.linear_model import Lasso
 
 mdl = Lasso(alpha=0.1)
@@ -125,7 +125,7 @@ A high dimensional (ie, has many features) dataset can prove problematic to fit 
 
 _Parial Least Squares_ (PLS) is another dimensionality reducing regression method that, unlike PCR, attempts to find derived features based upon their explanation of the target. PLS accomplishes this by prioritizing projected features that are most correlated with the target. As with PCR, the number of derived features $M$ should be chosen by cross-validation. This method is known to reduce bias, but can also increase variance.
 
-```{r}
+```r
 library(pls)
 
 pls.mdl = plsr(y~., data=df.train, scale=TRUE, validation="CV")

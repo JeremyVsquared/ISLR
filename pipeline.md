@@ -4,7 +4,7 @@ Pipelines are chains of algorithms, feeding data from one to the other with the 
 
 Pipeline of PCA and Decision Tree Regressor
 
-```{python}
+```python
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
@@ -28,13 +28,13 @@ pred = pipe.predict(df.drop('y', axis=1))
 
 Pipeline of ANOVA and SVM
 
-```{python}
+```python
 from sklearn import svm
 from sklearn.pipeline import make_pipeline
 from sklearn.feature_selection import SelectKBest, f_regression
 
 anova_filter = SelectKBest(f_regression, k=3)
-# 2) svm
+
 clf = svm.SVC(kernel='linear')
 
 anova_svm = make_pipeline(anova_filter, clf)

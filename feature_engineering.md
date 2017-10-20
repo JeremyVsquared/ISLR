@@ -1,3 +1,5 @@
+# Feature Engineering
+
 Many popular and effective regression and classification algorithms rely upon linear models. While these approximations may prove to be effective, the true underlying function being modeled is unlikely to be linear. In order to accurately model reality, it is necessary or just beneficial to exceed linearity, which can be accomplished by deriving, or engineering, new features from the data already available. The simplest form is _linear basis expansion_, which derives new features from applying simple mathematical functions to the existing features. Popular choices are _log and power functions_, _differences and ratios_, _counts_, _polynomials_, and _rational differences and polynomials_. These derived features can be appended to the existing feature set, or replace it altogether.
 
 ## Logarithms & Power Functions
