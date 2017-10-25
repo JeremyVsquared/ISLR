@@ -86,6 +86,51 @@ While CNN's have proven to be wildly effective in the field of computer vision, 
 
 Rather than a matrix of pixel values as one would see in computer vision, the input would be a matrix representation of the text by GloVe, one hot vectors, word2vec, etc. It is typical for the filter to cover 2 to 5 words at a time with a stride of 1. Greater strides can of course be used and will begin to approximat the behavior one would expect from an RNN.  A benefit of using CNN's for NLP is that the convolution filters are able to automatically develop sound representations without the necessity of maintaining the entire vocabulary. This reduces the computational load and enables the network to perform well upon n-grams larger than would ideal with other methods.
 
+The following code sample uses a CNN to perform sentiment analysis on movie reviews.
+
+```python
+from __future__ import division, print_function, absolute_import
+  
+import tensorflow as tf
+import tflearn
+from tflearn.layers.core import input_data, dropout, fully_connected
+from tflearn.layers.conv import conv_1d, global_max_pool
+from tflearn.layers.merge_ops import merge
+from tflearn.layers.estimator import regression
+from tflearn.data_utils import to_categorical, pad_sequences
+from tflearn.datasets import imdb
+
+# load data set
+train, test, _ = imdb.load_data(path='imdb.pkl', n_words=10000,valid_portion=0.1)
+X_train, y_train = train
+X_test, y_test = test
+
+# preprocessing
+X_train = pad_sequences(X_train, maxlen=100, value=0.)
+X_test = pad_sequences(X_test, maxlen=100, value=0.)
+# labeling
+y_train = to_categorical(y_train, 2)
+y_test = to_categorical(y_test, 2)
+
+# build CNN
+network = input_data(shape=[None, 100], name='input')
+network = tflearn.embedding(network, input_dim=10000, output_dim=128)
+
+branch1 = conv_1d(network, 128, 3, padding='valid', activation='relu', regularizer="L2")
+branch2 = conv_1d(network, 128, 4, padding='valid', activation='relu', regularizer="L2")
+branch3 = conv_1d(network, 128, 5, padding='valid', activation='relu', regularizer="L2")
+
+network = merge([branch1, branch2, branch3], mode='concat', axis=1)
+network = tf.expand_dims(network, 2)
+network = global_max_pool(network)
+network = dropout(network, 0.5)
+network = fully_connected(network, 2, activation='softmax')
+network = regression(network, optimizer='adam', learning_rate=0.001, loss='categorical_crossentropy', name='target')
+# Training
+model = tflearn.DNN(network, tensorboard_verbose=0)
+model.fit(X_train, y_train, n_epoch=1, shuffle=True, validation_set=(X_test, y_test), show_metric=True, batch_size=32)
+```
+
 # More architectures
 
 In general, the more convolution steps we have, the more complicated relationships our network will be able to learn to recognize
