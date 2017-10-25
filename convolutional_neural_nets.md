@@ -7,10 +7,39 @@ A convolutional layer being used for a computer vision problem may be looking fo
 ```python
 from __future__ import division, print_function, absolute_import
 
-import numpy as np
 import tflearn
+import tflearn.datasets.mnist as mnist
+from tflearn.layers.core import input_data, dropout, fully_connected
+from tflearn.layers.conv import conv_2d, max_pool_2d
+from tflearn.layers.normalization import local_response_normalization
+from tflearn.layers.estimator import regression
 
+# data load & prep
+X_train, y_train, X_test, y_test = mnist.load_data(one_hot=True)
+X_train = X_train.reshape([-1, 28, 28, 1])
+X_test = X_test.reshape([-1, 28, 28, 1])
 
+# build the CNN 
+network = input_data(shape=[None, 28, 28, 1], name='input')
+# 1st convolution layer
+network = conv_2d(network, 32, 3, activation='relu', regularizer="L2")
+network = max_pool_2d(network, 2)
+network = local_response_normalization(network)
+# 2nd convolution layer
+network = conv_2d(network, 64, 3, activation='relu', regularizer="L2")
+network = max_pool_2d(network, 2)
+network = local_response_normalization(network)
+# feed pooled, convoluted features into fully connected layers
+network = fully_connected(network, 128, activation='tanh')
+network = dropout(network, 0.8)
+network = fully_connected(network, 256, activation='tanh')
+network = dropout(network, 0.8)
+network = fully_connected(network, 10, activation='softmax')
+network = regression(network, optimizer='adam', learning_rate=0.01,loss='categorical_crossentropy', name='target')
+
+# training
+model = tflearn.DNN(network, tensorboard_verbose=0)
+model.fit({'input': X_train}, {'target': y_train}, n_epoch=1,validation_set=({'input': X_test}, {'target': y_test}), snapshot_step=100, show_metric=True, run_id='convnet_mnist')
 ```
 
 ## Components
@@ -32,6 +61,8 @@ Most real world data is nonlinear in nature, but a careful reading of the dimens
 ### Pooling
 
 Now that the data has been convolved and linearity corrected by ReLU, we further distill the data by __pooling__, or subsampling. This process further reduces the dimensionality of the data, thus making the input representations more manageable, while surfacing the most important features found by convolution. This has the effect of generating a representation of the input that is scale invariant. This is done by defining a spatial subset of feature map matrix and performing some operation upon those values to arrive at a single value representation. The most pooling method is __max pooling__ which simply outputs the greatest value within the ReLU feature map. Averaging and summing have also been used, but max pooling has been found to be more effective in practice. Pooling has the benefits of making the network resistant to noisy data and overfitting by reducing the computational load and parameters.
+
+In the previous sample code, there was a call to local response normalization after the pooling function. This action, as the name would suggest, normalizes the pooled feature map so that areas of interest are more consistenly highlighted and easier to identify. Conceptually this can be thought of as a sort of tunnel vision, dampening surrounding activations and amplifying the strongest signals but also enforcing consistent values for the sake of processing efficiency.
 
 ### Fully connected layer
 
@@ -57,7 +88,7 @@ Rather than a matrix of pixel values as one would see in computer vision, the in
 
 # More architectures
 
-In general, the more convolution steps we have, the more complicated features our network will be able to learn to recognize
+In general, the more convolution steps we have, the more complicated relationships our network will be able to learn to recognize
 
 Notable architectures:
     - LeNet
