@@ -60,7 +60,11 @@ Neural networks operate by perform simple calculations in each layer, passing th
 
 In order to estimate a set of weights which minimize the cust, gradient descent can be used but is not a very performant option. When facing larger networks, it can prove to be quite slow and cumbersome. This process can be sped up substantially by using __stochastic gradient descent__ which operates upon randomly sampled batches of data and extrapolating the results upon the larger data set.
 
-### Strengths & Weaknesses
+## Cross-entropy: A Better Cost Function
+
+While using a quadratic cost function will work, it has a critical weakness. Due to the nature of a quadratic function output, learning slows when predictions are very wrong. Cross-entropy has the advantage of avoiding this problem by learning faster when very wrong, and slowing when less wrong. The cross-entropy output is consistently positive and approaches zero as predictions get closer and closer to the true valye $y$, just like the quadratic function. While both the quadratic cost function and cross-entropy have the necessary characteristics to perform as the cost function, cross-entropy is almost always a superior option when working with sigmoid neurons.
+
+# Strengths & Weaknesses
 
 Neural networks have been proven to be a universal approximator. That is, for any given input $x$ and any given output $y$, a neural network can be trained to approximate this function. This is known as a _universality theorem_. Neural networks perform particularly well at modeling rational differences and ratios, and quite poorly with rational polynomials.
 

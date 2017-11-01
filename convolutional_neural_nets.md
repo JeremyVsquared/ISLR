@@ -131,6 +131,8 @@ model = tflearn.DNN(network, tensorboard_verbose=0)
 model.fit(X_train, y_train, n_epoch=1, shuffle=True, validation_set=(X_test, y_test), show_metric=True, batch_size=32)
 ```
 
+In this architecture, we use 3 convolution layers before pooling and the fully connected layer.
+
 # More architectures
 
 In general, the more convolution steps we have, the more complicated relationships our network will be able to learn to recognize
