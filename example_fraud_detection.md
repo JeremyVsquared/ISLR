@@ -1,0 +1,8 @@
+- consider dimensionality reduction (ie, PCA): verify the features you're using are pertinent to the predictor and explains variance
+- class imbalance will undoubtedly be an issue
+- visualization is important to develop an intuition, or general feel, for the data set
+- speak with domain experts if you don't have domain expertise to better understand factors applicable to the data set
+- supervised learning problem presuming data is properly labeled
+- all examples may not be properly labeled, unsupervised methods come into play here
+- autoencoder neural networks are used for anomaly detection in unsupervised learning
+- due to class imbalance, prediction accuracy is essentially irrelevant so performance metrics used will be __sensitivity__ and __precision__

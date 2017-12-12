@@ -1,12 +1,14 @@
 # Evaluation Metrics
 
+We need reliable means of evaluating our models after they have been trained. This effort can prove difficult as not every performance metric is appropriate to apply to every situation.
+
 ## Sensitivity & Specifity
 
 _Sensitivity_ is the calculation of the correct prediction of a true positive.
 
 $$sensitivity = \frac{true\ positives}{true\ positives + false\ negatives}$$
 
-_Specifity_ is the calculation of the correct prediction of true negatives.
+_Specificity_ is the calculation of the correct prediction of true negatives.
 
 $$specificity = \frac{true\ negatives}{true\ negatives + false\ positives}$$
 
@@ -16,9 +18,29 @@ _Precision_ is the ratio of predicted true positives to actual positives. Can be
 
 $$precision = \frac{true\ positives}{true\ positives + false\ positives}$$
 
+```python
+from sklearn import metrics
+
+precision = metrics.precision_score(y_test, y_pred)
+```
+
+```r
+precision = sum(y.pred & y.test) / sum(y.pred)
+```
+
 _Recall_ is the ratio of predicted true positives to all positives. Can be thought of as the quantitative measure of how many positives are captured with the model regardless of how many incorrectly predicted positives are included.
 
 $$recall = \frac{true\ positives}{true\ positives + false\ negatives}$$
+
+```python
+from sklearn import metrics
+
+precision = metrics.recall_score(y_test, y_pred)
+```
+
+```r
+recall = sum(y.pred & y.test) / sum(y.test)
+```
 
 ## Mean Absolute Error (MAE)
 
@@ -28,7 +50,7 @@ magnitude of average absolute error
 
 ## Mean Absolute Percentage Error (MAPE)
 
-$$\frac{1}{v} \sum&v_{t=1} |\frac{e_t}{y_t} x 100$$
+$$\frac{1}{v} \sum^v_{t=1} |\frac{e_t}{y_t}| * 100$$
 
 gives percentage score of how the predicted values deviate from actual values
 

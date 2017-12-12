@@ -1,4 +1,4 @@
-__Anomaly detection__ refers to discovering nonconforming data within a larger data set. Any patterns falling outside of expected values are referred to as __anomalies__, __outliers__, __exceptions__ or __dicordant observations__. In two dimenional data sets, these anomalies can be easily found visually by graphing the data, but in higher dimensions or extremely large data sets it can prove rather difficult and thus numerous algorithms have been proven or developed to effectively deal with this issue. Anomaly detection is quite useful for such applications as component failure analysis, network intrusion, fraud detection and identity theft.
+__Anomaly detection__ refers to discovering nonconforming data within a larger data set. Any patterns falling outside of expected values are referred to as __anomalies__, __outliers__, __exceptions__ or __discordant observations__. In two dimensional data sets, these anomalies can be easily found visually by graphing the data, but in higher dimensions or extremely large data sets it can prove rather difficult and thus numerous algorithms have been proven or developed to effectively deal with this issue. Anomaly detection is quite useful for such applications as component failure analysis, network intrusion, fraud detection and identity theft.
 
 # Techniques
 
@@ -8,11 +8,29 @@ The most simple approach to finding outliers within data is what is known as __r
 
 ## Clustering approaches
 
-Beyond rule based anomaly detection, __clustering__ algorithms have also proven quite useful. These unsupervised methods are effective because on the whole anomalous observations will tend to fall spatially further away from expected observations. This will surface varying centroids that can be used to define expected and anomalous behavior in most situations, thus allowing the labeling of the anomalous observations by spatial division. The k-means algorithm is the most popular choice of clusering algorithms.
+Beyond rule based anomaly detection, __clustering__ algorithms have also proven quite useful. These unsupervised methods are effective because on the whole anomalous observations will tend to fall spatially further away from expected observations. This will surface varying centroids that can be used to define expected and anomalous behavior in most situations, thus allowing the labeling of the anomalous observations by spatial division. The k-means algorithm is the most popular choice of clustering algorithms.
 
 ```python
-# clustering anomaly detection code example 
+# clustering anomaly detection code example
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+
+# generate example data
+random_state = 1
+X, y = make_blobs(n_samples=1000, random_state=random_state)
+X_clustered = np.vstack((X[y == 0][:500], X[y == 1][:5]))
+
+# perform clustering
+y_pred = KMeans(n_clusters=2, random_state=random_state).fit_predict(X_clustered)
+
+# plot the data & clustering predictions
+plt.scatter(X_clustered[:, 0], X_clustered[:, 1], c=y_pred)
+plt.show()
 ```
+
+![Kmeans Anomaly Detection](images/anomaly_detection_01_kmeans.jpg)
 
 ## Density based approaches
 
@@ -48,6 +66,6 @@ Detecting collective outliers without labeled training poses a greater challenge
 
 When the data becomes more complicated, including more than a single feature, we are the searching for __multivariate collective anomalies__. This category requires special attention as the approaches differ based upon whether the data is __ordered__ or __unordered__.
 
-When the data is ordered, there are a variety of effective approaches. __Graph analysis__ proves useful as analyzing the graph flow will often make anomalies more obvious. For example, consider peer to peer file transfer data set in which the individual users, amount of data, and time of transfer have been logged. Visualizing the data transferring between individual users should surface anomalous activity spikes or drops. We can also implement a form of pipeline from clustering to markov chains in order to reveal related values and their order. In this strategy, we are using the clusters as markov states. In addition to these two methods, we can aso use __information theory__ as anomalies contain abnormally high information and the data points which present the highest potential irregularity are likely to prove to be anomalous. 
+When the data is ordered, there are a variety of effective approaches. __Graph analysis__ proves useful as analyzing the graph flow will often make anomalies more obvious. For example, consider peer to peer file transfer data set in which the individual users, amount of data, and time of transfer have been logged. Visualizing the data transferring between individual users should surface anomalous activity spikes or drops. We can also implement a form of pipeline from clustering to markov chains in order to reveal related values and their order. In this strategy, we are using the clusters as markov states. In addition to these two methods, we can also use __information theory__ as anomalies contain abnormally high information and the data points which present the highest potential irregularity are likely to prove to be anomalous. 
 
 More traditional techniques can be employed in the case of unordered multivariate collective anomalies. Consider an example of a weeks worth of temperature measurements from random cities. In this case, the simplest method is likely to be clustering. The output of this should result in anomalies falling within smaller clusters than the others, or outside of clusters altogether. Nearest neighbor based algorithms are also useful and for the same reasons as clustering. Anomalies will often appear near to other anomalies and thus be easier to detect with a labeled training set, which is assuming that a non-labeled data set was accurately labeled by clustering.

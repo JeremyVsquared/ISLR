@@ -6,7 +6,7 @@ These association rules typically take the form of {flashlight} -> {batteries}, 
 
 There is an implementation of the Apriori algorithm, probably the most commonly used association rules algorithm, in the arules package in R.
 
-```{r}
+```r
 library(arules)
 
 itemFrequency(transactions, support=0.1)

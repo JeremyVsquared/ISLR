@@ -46,7 +46,7 @@ is as small as possible. Here $|T|$ indicates the number of terminal nodes of th
 3. Use k-fold cross-validation to choose $a$. That is, divide the training observations in $k$ folds. For each $k=1, ..., K$,
     a. Repeat steps 1 & 2 on all but the $k^{th}$ fold of the training data
     b. Evaluate the mean squared prediction error on the data in teh left-over $k^{th}$ fold, as a dunction of $a$
-  Average the results for each value of $a$, and pick $a$ to minimize the average error.
+      Average the results for each value of $a$, and pick $a$ to minimize the average error.
 4. Return the subtree from step 2 that corresponds to the chosen value of $a$
 
 ### Classification Trees
@@ -61,15 +61,15 @@ However, it turns out that classification error is not sufficiently sensitive fo
 
 1. _Gini index_
     This is a measure of total variance across the $K$ classes and is measured by
-    
+
     $G = \sum^K_{k=1}\hat{p}_{mk}(1 - \hat{p}_{mk})$
 2. _Cross-entropy_
     Conceptually similar to Gini index, but measured by
-    
+
     $D = -\sum^K_{k=1} \hat{p}_{mk} log \hat{p}_{mk}$
-    
+
     Like the Gini index, the cross-entropy will take on a small value if the $m^{th}$ node is pure.
-    
+
     When building a classification tree, either the Gini index or the cross-entropy are typically used to evaluate the quality split, since these two approaches are more sensitive to node purity than is the classification error rate.
 
 ### Tree vs Linear Models
@@ -107,7 +107,7 @@ _Averaging a set of observations reduces variance._ Hence a natural way to reduc
 
 $\hat{f}_{avg}(x) = \frac{1}{B} \sum^B_{b=1}\hat{f}^b(x)$
 
-Of course, this is not practical because we generally do not have access to multiple training sets. Instead, we can _bootstrap_, by taking repeated samples from the (single) training data set. In this approach we generate $B$ different bootstrapped training data sets. We then train our method on the $b^{th}$ bootstrapped training set in order toget $f^{tb}(x)$, and finally average all the predictions, to obtain
+Of course, this is not practical because we generally do not have access to multiple training sets. Instead, we can _bootstrap_, by taking repeated samples from the (single) training data set. In this approach we generate $B$ different bootstrapped training data sets. We then train our method on the $b^{th}$ bootstrapped training set in order to get $f^{tb}(x)$, and finally average all the predictions, to obtain
 
 $\hat{f}_{bag}(x) = \frac{1}{B} \sum^B_{b=1} \hat{f}^{tb}(x)$
 
@@ -127,7 +127,7 @@ ___
 
 ## Random Forests
 
-_Random forests_ provide an improvement over bagged trees by way of a small tweak that _decorrelates_ the trees. As in bagging, we build a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, _a random sample of $m$ predictors_ is chosen as split candidates from the full set of $p$ predictors. The split is allowed to use only one of those $m$ predictors. A fresh sample of $m$ predictors is taken at each split and typically we choose $m \approx \sqrt{p}$ - that is, the number of predictors considered at each split is approximately equal to the square root of the total number of predicotrs. More specifically, random forests _decorrelates_ the trees because, on average, $(p * m)/p$ of the splits will not even consider a given strong predictor.
+_Random forests_ provide an improvement over bagged trees by way of a small tweak that _decorrelates_ the trees. As in bagging, we build a number of decision trees on bootstrapped training samples. But when building these decision trees, each time a split in a tree is considered, _a random sample of $m$ predictors_ is chosen as split candidates from the full set of $p$ predictors. The split is allowed to use only one of those $m$ predictors. A fresh sample of $m$ predictors is taken at each split and typically we choose $m \approx \sqrt{p}$ - that is, the number of predictors considered at each split is approximately equal to the square root of the total number of predictors. More specifically, random forests _decorrelate_ the trees because, on average, $(p * m)/p$ of the splits will not even consider a given strong predictor.
 
 Using a small value of $m$ in building a random forest will typically be helpful when we have a large number of correlated predictors.
 

@@ -1,6 +1,6 @@
 # Random Forests
 
-_Random forests_ is an ensemble algorithm that functions by training multiple decision trees and combining the results, by voting in the case of classification or by the mean of the outputs in the case of regression. Random forests uses bagging to generate many datasets, but takes the efforts to avoid overfitting one step further by selecting a random subset of features at each split. The introduction of randomization in the data by the bagging process and in the features in the splitting process result in a very robust learner by decorrelating the trees.
+_Random forests_ is an ensemble algorithm that functions by training many decision trees and combining the results, by voting in the case of classification (mode) or by the averaging the outputs (mean) in the case of regression. Random forests use bagging to generate many datasets, but takes the effort to avoid overfitting one step further by selecting a random subset of features at each split. The introduction of randomization in the data by the bagging process and in the feature selection in the splitting process result in a very robust learner by decorrelating the trees.
 
 Random forests can be applied to classification (Random Forest Classifier) and regression (Random Forest Regressor).
 
@@ -18,6 +18,8 @@ library(randomForest)
 rfc = randomForest(y~., data=df)
 y.pred = predict(rfc, X.test)
 ```
+
+Random forests perform better than decision trees by avoiding overfitting by averaging the results of many trees, decreasing variance by the random selection of features per tree, and decreasing bias by doing all of this with bagged decision trees.
 
 ## Strengths & Weaknesses
 
