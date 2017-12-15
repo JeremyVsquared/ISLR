@@ -1,4 +1,4 @@
-Autoencoders are neural networks that attempt to learn the identity function, which is to say that it trains to output the input. The important factor here is what's happening in between the input and the output. Autoencoders typically reduce the dimensionality of the input within the network, then reconstructs the input to form as the output. The optimization of the loss function is then the evaluation of the output against the original input.
+Autoencoders are unsupervised neural networks that attempt to learn the identity function, which is to say that it trains to output the input. This would be mathematically represented by $y^{(i)} = x^{(i)}$. The important factor here is what's happening in between the input and the output. Autoencoders typically reduce the dimensionality of the input within the network, then reconstructs the input to form as the output. The optimization of the loss function is then the evaluation of the output against the original input.
 
 ![Autoencoder architecture illustration](images/architecture_autoencoder.png)
 
@@ -6,13 +6,33 @@ This can be useful in that the process of training the reconstruction of the inp
 
 Autoencoders consist of two steps: the _encoder_ and the _decoder_. The _encoder_ is the first step wherein the dimension of the input is most often reduced. This compression is performed by hidden layers which are smaller, or have fewer neurons, than the input. The _decoder_ is the second step wherein the network attempts to expand compressed data to it's original state by connecting the often reduced dimension of the hidden layer to a layer of the same size as the input. This process practically causes the input to be approximately copied to the output having been given only a portion of the input data.
 
+At it's most basic, the autoencoder is a neural network that squeezes the data down to latent features. For simplicity, the following is an incomplete code sample of an autoencoder:
+
+```python
+net = tflearn.input_data(shape=[None, X_train.shape[1]])
+
+net = tflearn.fully_connected(net, 500, activation='tanh', regularizer=None, name='fc_en_1')
+
+#hidden state
+net = tflearn.fully_connected(net, 100, activation='tanh', regularizer='L1', name='fc_en_2', weight_decay=0.0001)
+
+net = tflearn.fully_connected(net, 500, activation='tanh', regularizer=None, name='fc_de_1')
+net = tflearn.fully_connected(net, X_train.shape[1], activation='linear', name='fc_de_2')
+
+net = tflearn.regression(net, optimizer='adam', learning_rate=0.01, loss='mean_square', metric='default')
+
+model = tflearn.DNN(net)
+```
+
+Notice this network has an input layer with 500 neurons, connected to a hidden layer with 100 neurons, connected to another hidden layer of 500 neurons. 
+
 # Applications
 
 As previously stated, autoencoders perform well at dimensionality reduction of nonlinear data, but are also well suited for generative applications including reconstruction of noisy or corrupted images, colorization of black and white images, as well as increasing image resolution and filling the additional pixels with enhanced detail. These same methods can be used on other types of data beyond images in order to decrease or minimize noise within the dataset.
 
 Generative applications of autoencoders have become quite popular recently with the exploration of the theoretical connection between such architectures and latent variable models. 
 
-# Types of Autoencoders
+## Types of Autoencoders
 
 The above described architecture where the hidden layer has fewer neurons than the input and output layers is referred to as an __undercomplete autoencoder__. This constraint of the hidden layer results in learning the most important subset of the dimensions of the data.
 
@@ -22,166 +42,135 @@ In addition to learning feature learning and dimension reduction, autoencoders c
 
 An alternative training method known as __recirculation__ may be used with autoencoders. This training method is generally thouhgt of as more inspired by true biological processes than back-propogation and functions by comparing the network activations of the original inputs and the reconstructed inputs.
 
+# Simple autoencoder
+
+This is an example autoencoder network using the MNIST data set. The input is initially 784 neurons, which is stepped down to 256, 128, then up to 256 within the hidden layers before recovering it's full dimensionality of 784 for the output.
 
 ```python
-'''
-decoder reconstructs input
-'''
-def decoder(code, n_code, phase_train):
-    with tf.variable_scope("decoder"):
-        with tf.variable_scope("hidden_1"):
-            hidden_1 = layer(code, [n_code, n_decoder_hidden_1], [n_decoder_hidden_1], phase_train)
-        
-        with tf.variable_scope("hidden_2"):
-            hidden_2 = layer(hidden_1, [n_decoder_hidden_1, n_decoder_hidden_2], [n_decoder_hidden_2], phase_train)
-        
-        with tf.variable_scope("hidden_3"):
-            hidden_3 = layer(hidden_2, [n_decoder_hidden_2, n_decoder_hidden_3], [n_decoder_hidden_3], phase_train)
-        
-        with tf.variable_scope("output"):
-            output = layer(hidden_3, [n_decoder_hidden_3, 784], [784], phase_train)
-    
-    return output
+from __future__ import division, print_function, absolute_import
 
+import numpy as np
+import matplotlib.pyplot as plt
+import tflearn as tf
 
-def layer(input, weight_shape, bias_shape, phase_train):
-    weight_init = tf.random_normal_initializer(stddev=(1.0 / weight_shape[0])**0.5)
-    biase_init = tf.constant_initializer(value=0)
+# load & prep data
+import tflearn.datasets.mnist as mnist
+X_train, _, X_test, _ = mnist.load_data(one_hot=True)
 
-    W = tf.get_variable("W", weight_shape, initializer=weight_init)
-    b = tf.get_variable("b", bias_shape, initializer=bias_init)
-    logits = tf.matmul(input, W) + b
+# build encoder
+encoder = tf.input_data(shape=[None, 784])
+encoder = tf.fully_connected(encoder, 256)
+encoder = tf.fully_connected(encoder, 128)
 
-    return tf.nn.sigmoid(layer_batch_norm(logits, weight_shape[1], phase_train))
+# build decoder
+decoder = tf.fully_connected(encoder, 256)
+decoder = tf.fully_connected(decoder, 784, activation='sigmoid')
 
+network = tf.regression(decoder, optimizer='adam', learning_rate=0.001, loss='mean_square', metric=None)
 
-def loss(output, x):
-    with tf.variable_scope("training"):
-        l2 = tf.sqrt(tf.reduce_sum(tf.square(tf.sub(output, x)), 1))
-        train_loss = tf.reduce_mean(l2)
-        train_summary_op = tf.scalar_summary("train_cost", train_cost)
+# train network
+model = tf.DNN(network, tensorboard_verbose=0)
+model.fit(X_train, X_train, n_epoch=20, validation_set=(X_test, X_test), run_id="auto_encoder", batch_size=256)
 
-        return train_loss, train_summary_op
+# recovering the session to apply to test set
+encoding_model = tf.DNN(encoder, session=model.session)
 
+# testing on new test images
+X_test = tf.data_utils.shuffle(X_test)[0]
 
-def training(cost, global_step):
-    optimizer = tf.train.AdamOptimizer(learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-08, use_locking=False, name='Adam')
-    train_op = optimizer.minimize(cost, global_step=global_step)
+# run on test set
+encode_decode = model.predict(X_test)
 
-    return train_op
-
-
-'''
-collect image summaries to compare input reconstructions
-'''
-def image_summary(summary_label, tensor):
-    tensor_reshaped = tf.reshape(tensor, [-1, 28, 29, 1])
-    return tf.image_summary(summary_label, tensor_reshaped)
-
-
-'''
-l2 norm evaluation
-'''
-def evaluate(output, x):
-    with tf.variable_scope("validation"):
-        in_im_op = image_summary("input_image", x)
-        out_im_op = image_summary("output_image", output)
-        l2 = tf.sqrt(tf.reduce_sum(tf.square(tf.sub(output, x, name="val_diff")), 1))
-
-        val_loss = tf.reduce_mean(l2)
-        val_summary_op = tf.scalar_summary("val_cost", val_loss)
-
-        return val_loss, in_im_op, out_im_op, val_summary_op
-
-
-def layer_batch_norm(x, n_out, phase_train):
-    beta_init = tf.constant_initializer(value=0.0, dtype=tf.float32)
-    gamma_init = tf.constant_initializer(value=1.0, dtype=tf.float32)
-
-    beta = tf.get_variable("beta", [n_out], initializer=beta_init)
-    gamma = tf.get_variable("gamma", [n_out], initializer=gamma_init)
-
-    batch_mean, batch_var = tf.nn.moments(x, [0], name="moments")
-    ema = tf.train.ExponentialMovingAverage(decay=0.9)
-    ema_apply_op = ema.apply([batch_mean, batch_var])
-    ema_mean, ema_var = ema.average(batch_mean), ema.average(batch_var)
-
-    def mean_var_with_update():
-        with tf.control_dependencies([ema_apply_op]):
-            return tf.identity(batch_mean), tf.identity(batch_var)
-    
-    mean, var = control_flow_ops.cond(phase_train, mean_var_with_update, lambda:(ema_mean, ema_var))
-
-    x_r = tf.reshape(x, [-1, 1, 1, n_out])
-    normed = tf.nn.batch_norm_with_global_normalization(x_r, mean, var, beta, gamma, 1e-3, True)
-
-    return tf.reshape(normed, [-1, n_out])
-
-
-def run_network(n_code):
-    mnist = input_data.read_data_sets("data/", one_hot=True)
-
-    with tf.Graph().as_default():
-        with tf.variable_scope("autoencoder_model"):
-            # mnist data image of shape 28*28=784
-            x = tf.placeholder("float", [None, 784])
-            phase_train = tf.placeholder(tf.bool)
-            code = encoder(x, int(n_code), phase_train)
-            output = decoder(code, int(n_code), phase_train)
-
-            cost, train_summary_op = loss(output, x)
-
-            global_step = tf.Variable(0, name="global_step", trainable=False)
-            train_op = training(cost, global_step)
-
-            eval_op, in_im_op, out_im_op, val_summary_op = evaluate(output, x)
-
-            summary_op = tf.merge_all_summaries()
-            saver = tf.train.Saver(max_to_keep=200)
-            sess = tf.Session()
-
-            train_writer = tf.train.SummaryWriter("mnist_autoencoder_hidden=" + n_code + "_logs/", graph=sess.graph)
-            val_writer = tf.train.SummaryWriter("mnist_autoencoder_hidden=" + n_code + "_logs/", graph=sess.graph)
-
-            init_op = tf.initialize_all_variables()
-
-            sess.run(init_op)
-
-            # training cycle
-            for epoch in range(training_epochs):
-                avg_cost = 0.0
-                total_batch = int(mnist.train.num_examples / batch_size)
-
-                # loop over all batches
-                for i in range(total_batch):
-                    mbatch_x, mbatch_y = mnist.train.next_batch(batch_size)
-
-                    # fit training using batch data
-                    _, new_cost, train_summary = sess.run([train_op, cost, train_summary_op], feed_dict={x: mbatch_x, phase_train: True})
-
-                    train_writer.add_summary(train_summary, sess.run(global_step))
-
-                    # compute average loss
-                    avg_cost += new_cost / total_batch
-                
-                # display logs per epoch step
-                if epoch % display_step == 0:
-                    print("Epoch: {}; cost={:.9f}".format(epoch + 1, avg_cost))
-
-                    train_writer.add_summary(train_summary, sess.run(global_step))
-                    val_images = mnist.validation.images
-                    validation_loss, in_im, out_im, val_summary = sess.run([eval_op, in_im_op, out_im_op, val_summary_op], feed_dict={x: val_images, phase_train: False})
-
-                    val_writer.add_summary(in_im, sess.run(global_step))
-                    val_writer.add_summary(out_im, sess.run(global_step))
-                    val_writer.add_summary(val_summary, sess.run(global_step))
-                    print("Validation loss: {}".format(validation_loss))
-
-                    saver.save(sess, "mnist_autoencoder_hidden=" + n_code + "_logs/model-checkpoint-" + '%04d' % (epoch + 1), global_step=global_step)
-            
-            print("Optimization finished")
-
-            test_loss = sess.run(eval_op, feed_dict={x: mnist.test.images, phase_train: False})
-
-            print("Test loss: {}".format(test_loss))
+# show originals and reconstructions
+f, a = plt.subplots(2, 10, figsize=(10, 2))
+for i in range(10):
+    temp = [[ii, ii, ii] for ii in list(X_test[i])]
+    a[0][i].imshow(np.reshape(temp, (28, 28, 3)))
+    temp = [[ii, ii, ii] for ii in list(encode_decode[i])]
+    a[1][i].imshow(np.reshape(temp, (28, 28, 3)))
+f.show()
+plt.draw()
+plt.waitforbuttonpress()
 ```
+
+Notice the reconstructions are blurred and of generally lower quality than the originals, but remember that they were reduced to 16% of their original size prior to being reconstructed.  
+
+![architecture_autoencoder_sample.png](images/architecture_autoencoder_sample.png)
+
+# Denoising autoencoder
+
+The basic example can be converted into a denoising autoencoder example simply by corrupting the input images. The autoencoder will automatically remove or diminish the noise within the images in the process of reconstruction. 
+
+```python
+from __future__ import division, print_function, absolute_import
+
+import numpy as np
+import matplotlib.pyplot as plt
+import tflearn as tf
+
+
+def corrupt_image(X, perc):
+    X_corr = X.copy()
+    num_feats = X.shape[1]
+
+    _min = X.min()
+    _max = X.max()
+
+    for i, sample in enumerate(X):
+        mask = np.random.randint(0, num_feats, perc)
+
+        for m in mask:
+            if np.random.random() < 0.5:
+                X_corr[i][m] = _min
+            else:
+                X_corr[i][m] = _max
+
+    return X_corr
+
+	
+# load & prep data
+import tflearn.datasets.mnist as mnist
+X_train, _, X_test, _ = mnist.load_data(one_hot=True)
+
+X_train = corrupt_image(X_train, 10)
+X_test = corrupt_image(X_test, 10)
+
+# build encoder
+encoder = tf.input_data(shape=[None, 784])
+encoder = tf.fully_connected(encoder, 512)
+encoder = tf.fully_connected(encoder, 256)
+
+# build decoder
+decoder = tf.fully_connected(encoder, 512)
+decoder = tf.fully_connected(decoder, 784, activation='sigmoid')
+
+network = tf.regression(decoder, optimizer='adam', learning_rate=0.001, loss='mean_square', metric=None)
+
+# train network
+model = tf.DNN(network, tensorboard_verbose=0)
+model.fit(X_train, X_train, n_epoch=20, validation_set=(X_test, X_test), run_id="auto_encoder", batch_size=256)
+
+# recovering the session to apply to test set
+encoding_model = tf.DNN(encoder, session=model.session)
+
+# testing on new test images
+X_test = tf.data_utils.shuffle(X_test)[0]
+
+# run on test set
+encode_decode = model.predict(X_test)
+
+# show originals and reconstructions
+f, a = plt.subplots(2, 10, figsize=(10, 2))
+for i in range(10):
+    temp = [[ii, ii, ii] for ii in list(X_test[i])]
+    a[0][i].imshow(np.reshape(temp, (28, 28, 3)))
+    temp = [[ii, ii, ii] for ii in list(encode_decode[i])]
+    a[1][i].imshow(np.reshape(temp, (28, 28, 3)))
+f.show()
+plt.draw()
+plt.waitforbuttonpress()
+```
+
+![architecture_autoencoder_denoise_sample.png](images/architecture_autoencoder_denoise_sample.png)
+
+While certainly not perfect, this was a very simple architecture. The noise could be further reduced and the images actually sharpened by more complicated techniques.
