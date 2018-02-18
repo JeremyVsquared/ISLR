@@ -1,0 +1,102 @@
+- Intro
+  - NLP is a branch of data science that consists of systematic processes for analyzing, understanding, and deriving information from the text data
+  - common tasks: automatic summarization, machine translation, named entity recognition, relationship extraction, sentiment analysis, speech recognition, topic segmentation
+  - _tokenization_: process of converting a text into tokens
+  - _tokens_: words or entities present in the text
+  - _text object_: sentence, phrase, word or article
+- text preprocessing
+  - Preprocessing includes:
+    1. noise removal
+    2. Lexicon normalization
+    3. object standardization
+  - noise removal
+    - any piece of text which is not relevant to the context of the data and the end-output can be specified as the noise
+    - general approach for noise removal is using a noise dictionary, effectively a black list of words to remove
+  - lexicon normalization
+    - lexicon normalization is reducing multiple representations exhibited by a single word to a single form (ie, "played", "plays", "player" to "play")
+    - most common lexicon normalization practices are:
+      - **stemming**: rudimentary rule-based process of stripping suffixes
+      - **lemmatization**: organized & step by step procedure of obtaining the root form of the word, making use of vocabulary and morphological analysis
+  - object standardization
+    - text often contains words or phrases which are not present in any standard lexical dictionaries such as acronyms, hashtags with attached words, and colloquial slangs
+- text to features (feature engineering on text data)
+  - text features can be constructed using assorted techniques: _syntactical parsing_, _entities/n-grams/word-based features_, _statistical features_, and _word embeddings_
+  - syntactic parsing
+    - involves the analysis of words in the sentence for grammar and their arrangement in a manner that shows the relationships among the words
+    - Dependency grammar and part of speech tags are the important attributes of text syntactics
+    - Dependency trees
+      - relationship among the words in a sentence is determined by the basic dependency grammar
+      - dependency grammar is a class of syntactic text analysis that deals with (labeled) asymmetrical binary relations between two lexical items (words)
+      - every relation can be represented in the form of a triplet (relation, governor, dependent)
+      - when a tree is parsed recursively in top-down manner gives grammar relation triplets as output which can be used as features
+      - libraries StanfordCoreNLP and NLTK dependency grammars can be used to generate dependency trees
+    - part of speech tagging
+      - POS tags defines the usage and function of a word in the sentence
+      - POS tagging is used for many important purposes in NLP:
+        - Disambiguation: some languages have multiple meanings according to their usage; ie, "book" can be a noun ("read a book") or a verb ("book a flight")
+        - improving word-based features: learn different contexts of a word when used word as the features, however if the POS tag is linked with them, the context is preserved
+        - normalization and lemmatization: POS tags are the basis of lemmatization process for converting a word ot its base form (lemma)
+        - Efficient stopword removal: POS tags are useful in efficient removal of stop words 
+  - Entity extraction (entities as features)
+    - entities are defined as the most important chunks of a sentence - noun phrases, verb phrases or both
+    - topic modelling and named entity recognition are the two key entity detection methods in NLP
+    - Named Entity Recognition
+      - named entity recognition (NER): process of detecting the named entities such as person names, location names, copmany names, etc
+      - Noun phrase identification: deals with extracting all the noun phrases from a text using dependency parsing and POS tagging
+      - phrase classification: all the extracted noun phrases are classified into respective categories (locations, names, etc)
+      - Entity disambiguation: when entities are misclassified, creating a validation layer on top of the results is useful; knowledge graphs can be exploited for this purposes (Google knowledge graph, wikipedia)
+    - Topic modeling
+      - automatically identifying the topics present in a text corpus
+      - _topics_: repeating pattern of co-occurring terms in a corpus
+      - _Latent Dirichlet Allocation_ (LDA) is the most popular topic modelling technique
+    - N-Grams as features
+      - n words together are called n-grams
+      - _bag of words_ is a a 1-gram representation with a one-hot encoded vector for each word present in the text
+      - n grams are generally more informative as compared to words (unigrams) as features; ie, examine the phrases of a sentence rather individual words
+  - Statistical features
+    - text data can also be quantified directly into numbers using several techniques
+      - Term frequency - Inverse Document Frequency (TF - IDF)
+        - weighted model commonly used for information retrieval problems
+        - **term frequency (TF)**: count of a term **t** in document **D**
+        - **inverse document frequency (IDF)**: logarithm of ratio of total documents available in the corpus and number of documents containing term **T**
+        - **TF - IDF**: gives relative importance of a term in a corpus
+      - Count/density/readability features
+        - count or density based features can also be used
+        - these include: word count, sentence count, punctuation counts and domain specific word counts
+        - readability measures include: syllable counts, smog index nad flesch reading ease
+  - word embeddings (text vectors)
+    - word embeddings redefine high dimensional word features into low dimensional feature vectors by preserving the contextual similarity in the corpus; see auto encoders 
+    - Word2Vec and GloVe are two popular models to create word embeddings
+    - Word2Vec
+      - model is composed of preprocessing module, shallow neural network model called _Continuous Bag of Words_ and another net called _skip-gram_
+      - models are widely used for all other nlp problems
+      - first constructs vocabulary from training corpus and then learns word embedding representations
+- important tasks of NLP
+  - text classification: examples are spam detection, topic classification, sentiment analysis
+  - text matching/similarity
+    - applications include spelling correction, data de-duplication and genome analysis
+    - number of text matching techniques are available
+      - **Levenshtein distance**: defined as the minimum number of edits needed to transform one string into the other with edit operations being inserting, deletion, or substitution of a single character
+      - **phonetic matching**: taks a keyword as input (name, location, etc) and produces a character string that identifies a set of words that are phonetically similar
+      - **flexible string matching**
+      - **cosine similarity**: when the text is represented as vector notation, a general cosine similarity can also be applied in order to measure vectorized similarity
+  - Coreference resolution
+    - finding relational links among the words (or phrases) within the sentences; ie, pronouns referencing proper nouns within the sentence
+  - others
+    - **text summarization**: summarize automatically to produce most import and relevant sentences in order
+    - **machine translation**: translating between languages
+    - **natural language generation and understanding**: convert information from computer databases or semantic intents into readable human language; converting chunks of text into more logical structures
+    - **document information retrieval**: parsing textual data present in documents to analyzable, clean format
+- NLP libraries
+  - Scikit-learn: Machine learning in Python
+  - Natural Language Toolkit (NLTK): The complete toolkit for all NLP techniques.
+  - Pattern – A web mining module for the with tools for NLP and machine learning.
+  - TextBlob – Easy to use nl p tools API, built on top of NLTK and Pattern.
+  - spaCy – Industrial strength N LP with Python and Cython.
+  - Gensim – Topic Modelling for Humans
+  - Stanford Core NLP – NLP services and packages by Stanford NLP Group
+
+# References
+
+- [Ultimate Guide to Understand & Implement Natural Language Processing (with codes in Python)](https://www.analyticsvidhya.com/blog/2017/01/ultimate-guide-to-understand-implement-natural-language-processing-codes-in-python/)
+- [An Introduction to Natural Language Processing](https://blog.syncano.io/introduction-natural-language-processing/)
